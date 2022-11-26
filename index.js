@@ -2,6 +2,8 @@
 
 // confirm website is up
 var webdriver = require('selenium-webdriver')
+var axios = require('axios')
+require('dotenv').config()
 
 function visitSoftwareFromMenu() {
   var driver = new webdriver.Builder().forBrowser('chrome').build();
@@ -10,16 +12,16 @@ function visitSoftwareFromMenu() {
   {
     driver.findElement(webdriver.By.linkText('My account')).click().then(function()
     {
-      //confirm the URL
       return driver.getCurrentUrl()
     }).then(function(currentUrl) {
-      console.log('currentUrl: ', currentUrl)
       if (currentUrl === 'https://media-route-store.com/my-account/') {
-        //web hook to Discord
-        console.log('Website is up.')
+        axios.post(`https://discord.com/api/webhooks/${process.env.DISCORDHANDLE}/${process.env.DISCORDTOKEN}`, {
+          content: 'Website is up.'
+        })
       } else {
-        //web hook to Discord
-        console.log('Website is not up.')
+        axios.post(`https://discord.com/api/webhooks/${process.env.DISCORDHANDLE}/${process.env.DISCORDTOKEN}`, {
+          content: 'Website is not up.'
+        })
       }
     })
   })

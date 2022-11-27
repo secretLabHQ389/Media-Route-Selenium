@@ -8,8 +8,17 @@ require('dotenv').config()
 function visitSoftwareFromMenu() {
   var driver = new webdriver.Builder().forBrowser('chrome').build();
 
+  axios.post(`https://discord.com/api/webhooks/${process.env.DISCORDHANDLE}/${process.env.DISCORDTOKEN}`, {
+    content: 'Initiating the test.'
+  })
+
   driver.get('https://media-route-store.com').then(function()
   {
+
+    axios.post(`https://discord.com/api/webhooks/${process.env.DISCORDHANDLE}/${process.env.DISCORDTOKEN}`, {
+      content: 'Visiting URL...'
+    })
+
     driver.findElement(webdriver.By.linkText('My account')).click().then(function()
     {
       return driver.getCurrentUrl()

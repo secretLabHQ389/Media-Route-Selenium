@@ -7,7 +7,6 @@ pipeline {
       steps {
         agent {
           docker {
-            label: 'docker'
             image 'node:6-alpine'
             args '-p 3000:3000'
           }
